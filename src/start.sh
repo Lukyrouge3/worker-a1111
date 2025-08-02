@@ -20,7 +20,9 @@ python /stable-diffusion-webui/webui.py \
   --nowebui \
   --skip-version-check \
   --no-hashing \
-  --no-download-sd-model &
+  --no-download-sd-model \
+  --vae-path /vae.safetensors
+  --models-dir ./ &
 
 echo "Starting RunPod Handler"
 python -u /handler.py

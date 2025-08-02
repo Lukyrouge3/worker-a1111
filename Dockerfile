@@ -6,7 +6,9 @@ FROM alpine/git:2.43.0 as download
 # NOTE: CivitAI usually requires an API token, so you need to add it in the header
 #       of the wget command if you're using a model from CivitAI.
 RUN apk add --no-cache wget && \
-    wget -q -O /model.safetensors https://huggingface.co/XpucT/Deliberate/resolve/main/Deliberate_v6.safetensors
+    wget -q -O /model.safetensors https://huggingface.co/OnomaAIResearch/Illustrious-XL-v2.0/resolve/main/Illustrious-XL-v2.0.safetensors && \
+    wget -q -O /sdxl_vae.safetensors https://huggingface.co/stabilityai/sdxl-vae/resolve/main/sdxl_vae.safetensors && \
+    wget -q -O /OpenPoseXL2.safetensors https://huggingface.co/thibaud/controlnet-openpose-sdxl-1.0/resolve/main/OpenPoseXL2.safetensors
 
 # ---------------------------------------------------------------------------- #
 #                        Stage 2: Build the final image                        #
@@ -36,6 +38,8 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     python -c "from launch import prepare_environment; prepare_environment()" --skip-torch-cuda-test
 
 COPY --from=download /model.safetensors /model.safetensors
+COPY --from=download /sdxl_vae.safetensors /sdxl_vae.safetensors
+COPY --from=download /OpenPoseXL2.safetensors /OpenPoseXL2.safetensors
 
 # install dependencies
 COPY requirements.txt .

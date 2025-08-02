@@ -21,7 +21,7 @@ python /stable-diffusion-webui/webui.py \
   --skip-version-check \
   --no-hashing \
   --no-download-sd-model \
-  --vae-path /vae.safetensors
+  --vae-path /sdxl_vae.safetensors
   --models-dir ./ &
 
 echo "Starting RunPod Handler"
